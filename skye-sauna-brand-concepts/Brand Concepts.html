@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Skye Sauna · Three Brand Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Hanken+Grotesk:wght@400;500;700&family=Libre+Caslon+Display&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #14110f;
+    --ink-2: #1d1916;
+    --line: rgba(237, 228, 214, 0.14);
+    --paper: #ece3d4;
+    --muted: #8d8378;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: "Hanken Grotesk", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+
+  /* ---------- Masthead ---------- */
+  .masthead {
+    padding: 120px 0 96px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(140% 100% at 80% -10%, rgba(209, 78, 34, 0.13), transparent 55%),
+                radial-gradient(120% 90% at 10% 110%, rgba(47, 111, 117, 0.12), transparent 55%);
+    pointer-events: none;
+  }
+  .kicker {
+    font-family: "Space Mono", monospace;
+    font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 28px;
+  }
+  .masthead h1 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 800;
+    font-size: clamp(44px, 7vw, 92px);
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    max-width: 16ch;
+    text-wrap: balance;
+  }
+  .masthead h1 em { font-style: normal; color: #d98b4a; }
+  .masthead .lede {
+    margin-top: 32px; max-width: 60ch;
+    font-size: 18px; color: #cbc1b2;
+  }
+  .masthead .lede .gd { color: #9aa9a3; font-style: italic; }
+  .conceptnav {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-top: 44px;
+    position: relative; z-index: 1;
+  }
+  .conceptnav a {
+    text-decoration: none; color: var(--paper);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 11px 20px 11px 16px; font-size: 14px;
+    display: inline-flex; align-items: baseline; gap: 9px;
+    transition: background .2s, border-color .2s;
+  }
+  .conceptnav a:hover { background: rgba(237,228,214,0.06); border-color: rgba(237,228,214,0.3); }
+  .conceptnav a b { font-weight: 700; }
+  .conceptnav a span { color: var(--muted); font-size: 12.5px; }
+
+  /* ---------- Concept section shell ---------- */
+  .concept { padding: 96px 0; border-bottom: 1px solid var(--line); }
+  .concept-head { display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap; }
+  .concept-num {
+    font-family: "Space Mono", monospace; font-size: 13px;
+    letter-spacing: 0.2em; color: var(--c-accent);
+  }
+  .concept-title {
+    font-family: var(--c-display); font-weight: var(--c-display-wt, 400);
+    font-size: clamp(64px, 11vw, 150px); line-height: 0.9;
+    letter-spacing: var(--c-display-ls, -0.01em);
+    color: var(--c-fg);
+  }
+  .concept-meta { flex: 1; min-width: 280px; }
+  .pron {
+    font-family: "Space Mono", monospace; font-size: 13px;
+    color: var(--muted); margin: 18px 0 4px; letter-spacing: 0.04em;
+  }
+  .meaning { font-size: 15px; color: #b6ab9d; }
+  .meaning b { color: var(--c-accent); font-weight: 600; }
+  .rationale {
+    flex: 1; min-width: 280px; max-width: 46ch; margin-top: 8px;
+    font-size: 16px; color: #c4baac; line-height: 1.62;
+  }
+  .rationale .lbl {
+    display: block; font-family: "Space Mono", monospace; font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .grid { display: grid; gap: 28px; margin-top: 56px; }
+  .panel {
+    background: var(--c-panel); border: 1px solid var(--c-line);
+    border-radius: 4px; padding: 30px;
+  }
+  .panel-lbl {
+    font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 22px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .panel-lbl::after { content:""; flex:1; height:1px; background: var(--c-line); }
+
+  /* logo block */
+  .logo-stage {
+    background: var(--c-stage); border-radius: 3px; min-height: 200px;
+    display: flex; align-items: center; justify-content: center; gap: 22px;
+    padding: 40px; flex-wrap: wrap;
+  }
+  .wordmark { display: flex; align-items: center; gap: 18px; }
+  .wordmark .mk { width: var(--mk-w, 52px); height: auto; flex: none; }
+  .wordmark .wm {
+    font-family: var(--c-display); font-weight: var(--c-display-wt, 400);
+    font-size: var(--wm-size, 58px); letter-spacing: var(--c-display-ls, 0);
+    color: var(--c-fg); line-height: 1;
+  }
+  .logo-variants { display: flex; gap: 14px; margin-top: 18px; flex-wrap: wrap; }
+  .logo-chip {
+    flex: 1; min-width: 150px; border-radius: 3px; padding: 22px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--c-line);
+  }
+  .logo-chip .mk { width: 30px; }
+  .logo-chip .lockup { display:flex; align-items:center; gap:11px; }
+  .logo-chip .lockup .nm {
+    font-family: var(--c-display); font-weight: var(--c-display-wt,400);
+    font-size: 26px; letter-spacing: var(--c-display-ls,0);
+  }
+
+  /* palette */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 0; border-radius: 3px; overflow: hidden; }
+  .sw { padding: 20px 18px; min-height: 132px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .sw .nm { font-size: 14px; font-weight: 600; }
+  .sw .hx { font-family: "Space Mono", monospace; font-size: 12px; opacity: 0.82; margin-top: 3px; }
+
+  /* type */
+  .type-row { padding: 22px 0; border-top: 1px solid var(--c-line); }
+  .type-row:first-of-type { border-top: 0; padding-top: 0; }
+  .type-tag { font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .type-display { font-family: var(--c-display); font-weight: var(--c-display-wt,400); font-size: clamp(40px,6vw,72px); line-height: 0.98; letter-spacing: var(--c-display-ls,0); color: var(--c-fg); }
+  .type-body-spec { font-size: 19px; line-height: 1.55; color: #c9bfb1; max-width: 54ch; }
+  .type-scale { font-family: var(--c-display); color: var(--c-fg); display:flex; flex-wrap:wrap; align-items:baseline; gap:18px; }
+  .type-note { margin-top: 18px; font-size: 14.5px; color: #a89e90; line-height: 1.6; max-width: 60ch; }
+  .type-note b { color: var(--c-accent); font-weight: 600; }
+
+  /* voice */
+  .voice-en { font-family: var(--c-display); font-weight: var(--c-display-wt,400); font-size: clamp(32px,4.6vw,54px); line-height: 1.05; letter-spacing: var(--c-display-ls,0); color: var(--c-fg); text-wrap: balance; }
+  .voice-gd { margin-top: 18px; font-size: 22px; color: var(--c-accent); font-style: italic; }
+  .voice-gd .tr { display:block; margin-top: 8px; font-style: normal; font-size: 13px; color: var(--muted); font-family: "Space Mono", monospace; letter-spacing: 0.04em; }
+
+  /* two-up layout helper */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 880px){ .two { grid-template-columns: 1fr; } }
+
+  /* application card */
+  .app-stage { background: var(--c-stage); border-radius: 3px; padding: 48px; display:flex; justify-content:center; }
+
+  footer { padding: 80px 0 110px; color: var(--muted); font-size: 14px; }
+  footer b { color: var(--paper); font-weight: 600; }
+  .flag { margin-top: 18px; padding: 18px 22px; border:1px solid var(--line); border-radius: 4px; max-width: 70ch; color:#bdb3a5; font-size: 14px; line-height: 1.6; }
+  .flag b { color: #e0a968; }
+
+  /* ============ CONCEPT THEMES ============ */
+  /* 1 · TEINE : fire / ember / iron */
+  .teine {
+    --c-display: "Bricolage Grotesque", sans-serif; --c-display-wt: 800; --c-display-ls: -0.02em;
+    --c-accent: #d98b4a; --c-fg: #f2e7d6;
+    --c-panel: #1d1916; --c-line: rgba(237,228,214,0.12); --c-stage: #120e0c;
+    --mk-w: 50px; --wm-size: 60px;
+  }
+  /* 2 · CUAN : sea / atlantic / cold */
+  .cuan {
+    --c-display: "Libre Caslon Display", serif; --c-display-wt: 400; --c-display-ls: 0.005em;
+    --c-accent: #5fb0b0; --c-fg: #eaf2ef;
+    --c-panel: #15282d; --c-line: rgba(174,196,195,0.16); --c-stage: #0e2127;
+    --mk-w: 56px; --wm-size: 64px;
+    background: linear-gradient(180deg, #102a30, #0d2025);
+  }
+  .cuan .concept-title, .cuan .type-display, .cuan .voice-en, .cuan .wordmark .wm { font-weight: 400; }
+  /* 3 · BLÀTHS : warmth / blossom / heather */
+  .blaths {
+    --c-display: "Instrument Serif", serif; --c-display-wt: 400; --c-display-ls: 0;
+    --c-accent: #e2a95f; --c-fg: #efe8da;
+    --c-panel: #241c19; --c-line: rgba(239,232,218,0.12); --c-stage: #1b1411;
+    --mk-w: 40px; --wm-size: 70px;
+    background: linear-gradient(180deg, #1f1814, #14100d);
+  }
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#14110f">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#14110f"/>
+    <path d="M600 210c30 240 260 330 230 630-18 160-200 380-230 400-30-20-212-240-230-400-30-300 200-390 230-630 12 140 108 180 120 320 8-140-92-240-80-380Z" fill="#d14e22"/>
+    <path d="M600 420c16 120 130 160 110 320-12 100-110 190-110 190s-98-90-110-190c-20-160 94-200 110-320Z" fill="#e89a3c"/>
+  </svg>
+</template>
+
+
+<!-- ===================== MASTHEAD ===================== -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="kicker">Brand Exploration · Isle of Skye · An t-Eilean Sgitheanach</div>
+    <h1>A community sauna on the wild edge. Three names, three worlds: <em>fire, sea and warmth</em>.</h1>
+    <p class="lede">Wood-fired heat on a January harbourside, a cold plunge in the Atlantic and Gaelic at the centre of it, not as decoration. Below are three complete directions. Each stands on its own, with its own logo, palette, type, voice and a working sample. <span class="gd">Tagh aon.</span> Choose one and I'll build the full system around it.</p>
+    <nav class="conceptnav">
+      <a href="#teine"><b>01 · Teine</b><span>fire</span></a>
+      <a href="#cuan"><b>02 · Cuan</b><span>sea</span></a>
+      <a href="#blaths"><b>03 · Blàths</b><span>warmth</span></a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== 01 · TEINE ===================== -->
+<section class="concept teine" id="teine">
+  <div class="wrap">
+    <div class="concept-head">
+      <div>
+        <div class="concept-num">CONCEPT 01</div>
+        <div class="concept-title">Teine</div>
+        <div class="pron">/ˈtʃɛn.ə/ · "CHEH-nyuh"</div>
+        <div class="meaning">Scottish Gaelic for <b>fire</b></div>
+      </div>
+      <div class="rationale">
+        <span class="lbl">Rationale</span>
+        Teine is the hearth direction, all iron and ember. The mark is a single wind-leaned flame cut with the notch of a Cuillin peak, so heat and landscape read as one shape. A near-black peat ground lets the ember do all the talking and the raw grotesque wordmark feels worked, like something hammered rather than styled. It belongs on a slate sign, lit from below.
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- LOGO -->
+      <div class="panel">
+        <div class="panel-lbl">A · Logo</div>
+        <div class="logo-stage">
+          <div class="wordmark">
+            <svg class="mk" viewBox="0 0 50 64" fill="none" aria-label="Teine flame mark">
+              <path d="M25 2C27 16 40 21 35 39c-2 8-10 13-10 13" stroke="#d14e22" stroke-width="0" />
+              <path d="M25 3c1.5 12 13 16.5 11.5 31.5C35.6 47 26 60 25 61c-1-1-10.6-14-11.5-26.5C12 19.5 22 16 23 6c.6 7 5.4 9 6 16 .4-7-4.6-12-4-19Z" fill="#d14e22"/>
+              <path d="M25 24c.8 6 6.5 8 5.5 16-.6 5-5.5 9.5-5.5 9.5s-4.9-4.5-5.5-9.5c-1-8 4.7-10 5.5-16Z" fill="#e89a3c"/>
+            </svg>
+            <div class="wm">Teine</div>
+          </div>
+        </div>
+        <div class="logo-variants">
+          <div class="logo-chip" style="background:#d14e22;">
+            <div class="lockup">
+              <svg class="mk" viewBox="0 0 50 64"><path d="M25 3c1.5 12 13 16.5 11.5 31.5C35.6 47 26 60 25 61c-1-1-10.6-14-11.5-26.5C12 19.5 22 16 23 6c.6 7 5.4 9 6 16 .4-7-4.6-12-4-19Z" fill="#120e0c"/></svg>
+              <span class="nm" style="color:#120e0c;">Teine</span>
+            </div>
+          </div>
+          <div class="logo-chip" style="background:#f2e7d6;">
+            <div class="lockup">
+              <svg class="mk" viewBox="0 0 50 64"><path d="M25 3c1.5 12 13 16.5 11.5 31.5C35.6 47 26 60 25 61c-1-1-10.6-14-11.5-26.5C12 19.5 22 16 23 6c.6 7 5.4 9 6 16 .4-7-4.6-12-4-19Z" fill="#1d1916"/></svg>
+              <span class="nm" style="color:#1d1916;">Teine</span>
+            </div>
+          </div>
+          <div class="logo-chip" style="background:#120e0c;">
+            <div class="lockup">
+              <svg class="mk" viewBox="0 0 50 64"><path d="M25 3c1.5 12 13 16.5 11.5 31.5C35.6 47 26 60 25 61c-1-1-10.6-14-11.5-26.5C12 19.5 22 16 23 6c.6 7 5.4 9 6 16 .4-7-4.6-12-4-19Z" fill="#d14e22"/></svg>
+              <span class="nm" style="color:#f2e7d6;">Teine</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PALETTE -->
+      <div class="panel">
+        <div class="panel-lbl">B · Palette</div>
+        <div class="swatches">
+          <div class="sw" style="background:#120e0c;color:#f2e7d6;"><div class="nm">Peat Black</div><div class="hx">#120E0C</div></div>
+          <div class="sw" style="background:#3a3631;color:#f2e7d6;"><div class="nm">Cuillin Slate</div><div class="hx">#3A3631</div></div>
+          <div class="sw" style="background:#d14e22;color:#120e0c;"><div class="nm">Ember</div><div class="hx">#D14E22</div></div>
+          <div class="sw" style="background:#e89a3c;color:#120e0c;"><div class="nm">Hearth Gold</div><div class="hx">#E89A3C</div></div>
+          <div class="sw" style="background:#938a80;color:#120e0c;"><div class="nm">Ash Grey</div><div class="hx">#938A80</div></div>
+          <div class="sw" style="background:#ece3d4;color:#120e0c;"><div class="nm">Oatmeal</div><div class="hx">#ECE3D4</div></div>
+        </div>
+      </div>
+
+      <!-- TYPE + VOICE -->
+      <div class="two">
+        <div class="panel">
+          <div class="panel-lbl">C · Type</div>
+          <div class="type-row">
+            <div class="type-tag">Display · Bricolage Grotesque 800</div>
+            <div class="type-display">Tend the fire</div>
+          </div>
+          <div class="type-row">
+            <div class="type-tag">Body · Hanken Grotesk</div>
+            <div class="type-body-spec">Wood-fired heat on the harbour wall, then straight into the Atlantic. Sessions run from first light through to dark, all winter.</div>
+          </div>
+          <div class="type-note">A raw, slightly irregular grotesque against a clean humanist sans. <b>Bricolage</b> carries weight and grit for signage; <b>Hanken</b> stays quiet and legible at booking-text sizes. Both free on Google Fonts.</div>
+        </div>
+        <div class="panel">
+          <div class="panel-lbl">D · Voice</div>
+          <div class="voice-en">An ancient heat, kept for everyone.</div>
+          <div class="voice-gd">Cùm an teine beò.
+            <span class="tr">"Keep the fire alive." An idiom for keeping the community and its traditions going.</span>
+          </div>
+          <div class="type-note" style="margin-top:34px;">The voice is plain and warm, like a harbourmaster who's glad you came. Sentences stay short. Nobody says "wellness". Heat and cold get equal billing.</div>
+        </div>
+      </div>
+
+      <!-- APPLICATION -->
+      <div class="panel">
+        <div class="panel-lbl">E · Sample · Session Ticket</div>
+        <div class="app-stage">
+          <div style="width:340px;background:#171311;border:1px solid rgba(237,228,214,0.12);border-radius:6px;overflow:hidden;font-family:'Hanken Grotesk',sans-serif;">
+            <div style="background:#d14e22;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:11px;">
+                <svg style="width:26px;" viewBox="0 0 50 64"><path d="M25 3c1.5 12 13 16.5 11.5 31.5C35.6 47 26 60 25 61c-1-1-10.6-14-11.5-26.5C12 19.5 22 16 23 6c.6 7 5.4 9 6 16 .4-7-4.6-12-4-19Z" fill="#120e0c"/></svg>
+                <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:26px;color:#120e0c;">Teine</span>
+              </div>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:#120e0c;letter-spacing:0.1em;">No. 0417</span>
+            </div>
+            <div style="padding:24px;">
+              <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.2em;color:#938a80;text-transform:uppercase;">Harbour Sauna · Portree</div>
+              <div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:34px;color:#f2e7d6;line-height:1.05;margin:10px 0 4px;">Sun 14 Dec</div>
+              <div style="font-size:15px;color:#e89a3c;">07:30 – 08:30 · Dawn session</div>
+              <div style="height:1px;background:rgba(237,228,214,0.12);margin:22px 0;"></div>
+              <div style="display:flex;justify-content:space-between;font-size:14px;color:#c4baac;">
+                <div><div style="color:#938a80;font-size:12px;">Party</div>2 adults</div>
+                <div style="text-align:right;"><div style="color:#938a80;font-size:12px;">Plunge</div>Atlantic, 8°C</div>
+              </div>
+              <div style="margin-top:22px;padding:14px;background:#120e0c;border-radius:4px;text-align:center;font-family:'Space Mono',monospace;font-size:12px;color:#938a80;letter-spacing:0.18em;">▮▮ ▮ ▮▮▮ ▮ ▮▮ ▮ ▮▮▮▮</div>
+              <div style="margin-top:16px;text-align:center;font-size:13px;color:#938a80;font-style:italic;">Cùm an teine beò.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 02 · CUAN ===================== -->
+<section class="concept cuan" id="cuan">
+  <div class="wrap">
+    <div class="concept-head">
+      <div>
+        <div class="concept-num">CONCEPT 02</div>
+        <div class="concept-title">Cuan</div>
+        <div class="pron">/ˈkuən/ · "KOO-an"</div>
+        <div class="meaning">Scottish Gaelic for <b>ocean / sea</b></div>
+      </div>
+      <div class="rationale">
+        <span class="lbl">Rationale</span>
+        Cuan is the cold-water direction, with the plunge given top billing. The mark is a porthole holding two swells, the moment before you go under. A deep Atlantic ground and a high-contrast Caslon display make it the most editorial and maritime of the three, closer to a shipping line or a sea-swimming club than a sauna. One warm buoy-rust accent is the only heat in the frame, and it does a lot of work.
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- LOGO -->
+      <div class="panel">
+        <div class="panel-lbl">A · Logo</div>
+        <div class="logo-stage">
+          <div class="wordmark">
+            <svg class="mk" viewBox="0 0 64 64" fill="none" aria-label="Cuan porthole mark">
+              <circle cx="32" cy="32" r="29" stroke="#5fb0b0" stroke-width="2.5"/>
+              <circle cx="32" cy="32" r="23.5" stroke="#5fb0b0" stroke-width="1" stroke-opacity="0.4"/>
+              <path d="M11 36c4.5-5 9-5 13.5 0s9 5 13.5 0 9-5 13.5 0" stroke="#5fb0b0" stroke-width="2.4" stroke-linecap="round"/>
+              <path d="M11 45c4.5-5 9-5 13.5 0s9 5 13.5 0 9-5 13.5 0" stroke="#c46a3a" stroke-width="2.4" stroke-linecap="round"/>
+            </svg>
+            <div class="wm">Cuan</div>
+          </div>
+        </div>
+        <div class="logo-variants">
+          <div class="logo-chip" style="background:#5fb0b0;">
+            <div class="lockup">
+              <svg class="mk" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="29" stroke="#0e2127" stroke-width="3"/><path d="M11 38c4.5-5 9-5 13.5 0s9 5 13.5 0 9-5 13.5 0" stroke="#0e2127" stroke-width="3" stroke-linecap="round"/></svg>
+              <span class="nm" style="color:#0e2127;">Cuan</span>
+            </div>
+          </div>
+          <div class="logo-chip" style="background:#eaf2ef;">
+            <div class="lockup">
+              <svg class="mk" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="29" stroke="#15282d" stroke-width="3"/><path d="M11 38c4.5-5 9-5 13.5 0s9 5 13.5 0 9-5 13.5 0" stroke="#15282d" stroke-width="3" stroke-linecap="round"/></svg>
+              <span class="nm" style="color:#15282d;">Cuan</span>
+            </div>
+          </div>
+          <div class="logo-chip" style="background:#0e2127;">
+            <div class="lockup">
+              <svg class="mk" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="29" stroke="#5fb0b0" stroke-width="3"/><path d="M11 38c4.5-5 9-5 13.5 0s9 5 13.5 0 9-5 13.5 0" stroke="#c46a3a" stroke-width="3" stroke-linecap="round"/></svg>
+              <span class="nm" style="color:#eaf2ef;">Cuan</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PALETTE -->
+      <div class="panel">
+        <div class="panel-lbl">B · Palette</div>
+        <div class="swatches">
+          <div class="sw" style="background:#0e2127;color:#eaf2ef;"><div class="nm">Kelp Dark</div><div class="hx">#0E2127</div></div>
+          <div class="sw" style="background:#15323b;color:#eaf2ef;"><div class="nm">Deep Atlantic</div><div class="hx">#15323B</div></div>
+          <div class="sw" style="background:#2f6f75;color:#eaf2ef;"><div class="nm">Tide</div><div class="hx">#2F6F75</div></div>
+          <div class="sw" style="background:#aec4c3;color:#0e2127;"><div class="nm">Sea Mist</div><div class="hx">#AEC4C3</div></div>
+          <div class="sw" style="background:#c46a3a;color:#0e2127;"><div class="nm">Buoy Rust</div><div class="hx">#C46A3A</div></div>
+          <div class="sw" style="background:#eef3f1;color:#0e2127;"><div class="nm">Foam</div><div class="hx">#EEF3F1</div></div>
+        </div>
+      </div>
+
+      <div class="two">
+        <div class="panel">
+          <div class="panel-lbl">C · Type</div>
+          <div class="type-row">
+            <div class="type-tag">Display · Libre Caslon Display</div>
+            <div class="type-display">Into the blue</div>
+          </div>
+          <div class="type-row">
+            <div class="type-tag">Body · IBM Plex Sans</div>
+            <div class="type-body-spec">Two minutes in the sea, ten in the heat and again. The water off Skye rarely climbs past nine degrees, which is rather the point.</div>
+          </div>
+          <div class="type-note">High-contrast <b>Caslon</b> gives an editorial, slightly nautical authority, the feel of old chart engraving. <b>IBM Plex Sans</b> is the modern, technical counterweight for tide tables and times. Both free on Google Fonts.</div>
+        </div>
+        <div class="panel">
+          <div class="panel-lbl">D · Voice</div>
+          <div class="voice-en">Come for the cold. Stay for the heat.</div>
+          <div class="voice-gd">Thig don chuan.
+            <span class="tr">"Come to the sea." An open invitation rather than a command.</span>
+          </div>
+          <div class="type-note" style="margin-top:34px;">The voice is spare and a little salty, measured and weatherwise and quietly proud of the cold. Numbers and degrees are welcome. It stays calm and never reaches for hype.</div>
+        </div>
+      </div>
+
+      <!-- APPLICATION -->
+      <div class="panel">
+        <div class="panel-lbl">E · Sample · Booking Card</div>
+        <div class="app-stage">
+          <div style="width:360px;background:#eef3f1;border-radius:8px;overflow:hidden;font-family:'IBM Plex Sans',sans-serif;color:#15282d;box-shadow:0 18px 50px rgba(0,0,0,0.45);">
+            <div style="padding:22px 24px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(21,40,45,0.12);">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <svg style="width:30px;" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="29" stroke="#15282d" stroke-width="3"/><path d="M11 36c4.5-5 9-5 13.5 0s9 5 13.5 0 9-5 13.5 0" stroke="#15282d" stroke-width="3" stroke-linecap="round"/><path d="M11 45c4.5-5 9-5 13.5 0s9 5 13.5 0 9-5 13.5 0" stroke="#c46a3a" stroke-width="3" stroke-linecap="round"/></svg>
+                <span style="font-family:'Libre Caslon Display';font-size:26px;">Cuan</span>
+              </div>
+              <span style="font-family:'IBM Plex Sans';font-weight:600;font-size:11px;letter-spacing:0.12em;color:#2f6f75;text-transform:uppercase;">Elgol Beach</span>
+            </div>
+            <div style="padding:22px 24px;">
+              <div style="font-family:'Libre Caslon Display';font-size:30px;line-height:1.1;">Saturday Plunge<br>& Sauna</div>
+              <div style="display:flex;gap:24px;margin-top:18px;">
+                <div><div style="font-size:11px;color:#2f6f75;text-transform:uppercase;letter-spacing:0.1em;">Date</div><div style="font-weight:600;font-size:16px;">20 Dec</div></div>
+                <div><div style="font-size:11px;color:#2f6f75;text-transform:uppercase;letter-spacing:0.1em;">Time</div><div style="font-weight:600;font-size:16px;">09:00</div></div>
+                <div><div style="font-size:11px;color:#2f6f75;text-transform:uppercase;letter-spacing:0.1em;">Sea</div><div style="font-weight:600;font-size:16px;color:#c46a3a;">7.5°C</div></div>
+              </div>
+              <button style="width:100%;margin-top:22px;background:#15282d;color:#eef3f1;border:0;border-radius:5px;padding:14px;font-family:'IBM Plex Sans';font-weight:600;font-size:15px;cursor:pointer;">Reserve a spot — £18</button>
+              <div style="margin-top:14px;text-align:center;font-size:13px;color:#2f6f75;font-style:italic;font-family:'Libre Caslon Display';">Thig don chuan.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 · BLÀTHS ===================== -->
+<section class="concept blaths" id="blaths">
+  <div class="wrap">
+    <div class="concept-head">
+      <div>
+        <div class="concept-num">CONCEPT 03</div>
+        <div class="concept-title">Blàths</div>
+        <div class="pron">/blaːs/ · "blaas"</div>
+        <div class="meaning">Scottish Gaelic for <b>warmth / blossom</b></div>
+      </div>
+      <div class="rationale">
+        <span class="lbl">Rationale</span>
+        Blàths is the human, hospitable direction, warmth as a feeling rather than a temperature. The mark is a sprig of bog cotton (canach an t-slèibh), the white tuft that blossoms across Highland moors in summer. It is soft, local and a world away from spa lotus motifs. The delicate high-contrast Instrument Serif gives it an unhurried, almost handwritten editorial grace, warmed by amber and dusty heather. It feels like being welcomed in from the weather.
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- LOGO -->
+      <div class="panel">
+        <div class="panel-lbl">A · Logo</div>
+        <div class="logo-stage">
+          <div class="wordmark">
+            <svg class="mk" viewBox="0 0 44 64" fill="none" aria-label="Blàths bog-cotton mark">
+              <path d="M22 60V26" stroke="#a89e90" stroke-width="2" stroke-linecap="round"/>
+              <path d="M22 40c-5-1-9-4-10-8M22 48c4-1 8-3 9-7" stroke="#a89e90" stroke-width="1.6" stroke-linecap="round"/>
+              <g stroke="#efe8da" stroke-width="2.4" stroke-linecap="round">
+                <path d="M22 26V10"/><path d="M22 18 13 9"/><path d="M22 18l9-9"/><path d="M22 20 11 16"/><path d="M22 20l11-4"/>
+              </g>
+              <circle cx="22" cy="9" r="3.4" fill="#e2a95f"/>
+            </svg>
+            <div class="wm">Blàths</div>
+          </div>
+        </div>
+        <div class="logo-variants">
+          <div class="logo-chip" style="background:#e2a95f;">
+            <div class="lockup">
+              <svg class="mk" viewBox="0 0 44 64" fill="none"><path d="M22 60V26" stroke="#1b1411" stroke-width="2.4" stroke-linecap="round"/><g stroke="#1b1411" stroke-width="2.6" stroke-linecap="round"><path d="M22 26V10"/><path d="M22 18 13 9"/><path d="M22 18l9-9"/></g><circle cx="22" cy="9" r="3.4" fill="#1b1411"/></svg>
+              <span class="nm" style="color:#1b1411;">Blàths</span>
+            </div>
+          </div>
+          <div class="logo-chip" style="background:#efe8da;">
+            <div class="lockup">
+              <svg class="mk" viewBox="0 0 44 64" fill="none"><path d="M22 60V26" stroke="#835e78" stroke-width="2.4" stroke-linecap="round"/><g stroke="#835e78" stroke-width="2.6" stroke-linecap="round"><path d="M22 26V10"/><path d="M22 18 13 9"/><path d="M22 18l9-9"/></g><circle cx="22" cy="9" r="3.4" fill="#e2a95f"/></svg>
+              <span class="nm" style="color:#241c19;">Blàths</span>
+            </div>
+          </div>
+          <div class="logo-chip" style="background:#1b1411;">
+            <div class="lockup">
+              <svg class="mk" viewBox="0 0 44 64" fill="none"><path d="M22 60V26" stroke="#a89e90" stroke-width="2.4" stroke-linecap="round"/><g stroke="#efe8da" stroke-width="2.6" stroke-linecap="round"><path d="M22 26V10"/><path d="M22 18 13 9"/><path d="M22 18l9-9"/></g><circle cx="22" cy="9" r="3.4" fill="#e2a95f"/></svg>
+              <span class="nm" style="color:#efe8da;">Blàths</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PALETTE -->
+      <div class="panel">
+        <div class="panel-lbl">B · Palette</div>
+        <div class="swatches">
+          <div class="sw" style="background:#1b1411;color:#efe8da;"><div class="nm">Peat Brown</div><div class="hx">#1B1411</div></div>
+          <div class="sw" style="background:#835e78;color:#efe8da;"><div class="nm">Dusty Heather</div><div class="hx">#835E78</div></div>
+          <div class="sw" style="background:#b06a34;color:#1b1411;"><div class="nm">Bracken Rust</div><div class="hx">#B06A34</div></div>
+          <div class="sw" style="background:#e2a95f;color:#1b1411;"><div class="nm">Amber Glow</div><div class="hx">#E2A95F</div></div>
+          <div class="sw" style="background:#bcb2a4;color:#1b1411;"><div class="nm">Moor Stone</div><div class="hx">#BCB2A4</div></div>
+          <div class="sw" style="background:#efe8da;color:#1b1411;"><div class="nm">Bog Cotton</div><div class="hx">#EFE8DA</div></div>
+        </div>
+      </div>
+
+      <div class="two">
+        <div class="panel">
+          <div class="panel-lbl">C · Type</div>
+          <div class="type-row">
+            <div class="type-tag">Display · Instrument Serif</div>
+            <div class="type-display" style="font-size:clamp(48px,7vw,86px);">Warm welcome</div>
+          </div>
+          <div class="type-row">
+            <div class="type-tag">Body · Work Sans</div>
+            <div class="type-body-spec">Come up the path, leave your boots at the door and sit in the heat while the rain does what it does. There's tea after.</div>
+          </div>
+          <div class="type-note"><b>Instrument Serif</b> is delicate and high-contrast, editorial without being stiff and almost spoken aloud. <b>Work Sans</b> grounds it with friendly, even body text. Both free on Google Fonts.</div>
+        </div>
+        <div class="panel">
+          <div class="panel-lbl">D · Voice</div>
+          <div class="voice-en">Warmth, the way the island gives it.</div>
+          <div class="voice-gd">Blàths à fuachd.
+            <span class="tr">"Warmth out of cold." The heat the plunge gives back.</span>
+          </div>
+          <div class="type-note" style="margin-top:34px;">The voice is gentle and generous and speaks as "we". "Come in", "sit with us", "there's tea after". Hospitable without being soft. It welcomes the weather rather than hiding from it.</div>
+        </div>
+      </div>
+
+      <!-- APPLICATION -->
+      <div class="panel">
+        <div class="panel-lbl">E · Sample · Booking Card</div>
+        <div class="app-stage">
+          <div style="width:350px;background:#241c19;border:1px solid rgba(239,232,218,0.14);border-radius:10px;overflow:hidden;font-family:'Work Sans',sans-serif;color:#efe8da;">
+            <div style="padding:26px 26px 0;display:flex;align-items:center;gap:11px;">
+              <svg style="width:24px;" viewBox="0 0 44 64" fill="none"><path d="M22 60V26" stroke="#a89e90" stroke-width="2.4" stroke-linecap="round"/><g stroke="#efe8da" stroke-width="2.6" stroke-linecap="round"><path d="M22 26V10"/><path d="M22 18 13 9"/><path d="M22 18l9-9"/></g><circle cx="22" cy="9" r="3.4" fill="#e2a95f"/></svg>
+              <span style="font-family:'Instrument Serif';font-size:30px;">Blàths</span>
+            </div>
+            <div style="padding:18px 26px 26px;">
+              <div style="font-family:'Instrument Serif';font-size:34px;line-height:1.08;color:#efe8da;">An evening sauna<br><span style="font-style:italic;color:#e2a95f;">by the water</span></div>
+              <div style="margin-top:20px;display:flex;flex-direction:column;gap:11px;font-size:14.5px;color:#bcb2a4;">
+                <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(239,232,218,0.1);padding-bottom:9px;"><span>When</span><span style="color:#efe8da;">Fri 19 Dec · 17:00</span></div>
+                <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(239,232,218,0.1);padding-bottom:9px;"><span>Where</span><span style="color:#efe8da;">Camas Bàn, Portree</span></div>
+                <div style="display:flex;justify-content:space-between;"><span>For</span><span style="color:#efe8da;">You + 1 · tea after</span></div>
+              </div>
+              <button style="width:100%;margin-top:22px;background:#e2a95f;color:#1b1411;border:0;border-radius:999px;padding:14px;font-family:'Work Sans';font-weight:600;font-size:15px;cursor:pointer;">Hold my place</button>
+              <div style="margin-top:14px;text-align:center;font-family:'Instrument Serif';font-style:italic;font-size:17px;color:#835e78;">Blàths à fuachd.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.22em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;">Next step</div>
+    <div style="font-size:20px;color:var(--paper);max-width:60ch;line-height:1.5;">Tell me which direction sings (<b>Teine</b>, <b>Cuan</b> or <b>Blàths</b>) and I'll build the complete design system around it: tokens, fonts, components, UI kit and a brand guide.</div>
+    <div class="flag">
+      <b>⚑ Gaelic accuracy:</b> the Gaelic lines are drafted to be idiomatic rather than literal, but I'm not a native speaker and these are intended for real signage. Please have a fluent Gàidhlig speaker check the chosen line before anything is cut or printed.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
