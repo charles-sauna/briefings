@@ -3,28 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skye Sauna · Site Shortlist</title>
+  <title>Skye Sauna: Site Shortlist</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #1a2324; font-family: -apple-system, BlinkMacSystemFont, sans-serif; height: 100vh; display: flex; flex-direction: column; }
-    header { background: #f6f1e9; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+    body { background: #1a2324; font-family: -apple-system, BlinkMacSystemFont, sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+    header { background: #f6f1e9; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
     header h1 { font-size: 0.9rem; font-weight: 500; color: #1a2324; letter-spacing: 0.03em; }
     header a { font-size: 0.8rem; color: #1e3a35; text-decoration: none; border: 1px solid #1e3a35; padding: 5px 12px; border-radius: 3px; }
     header a:hover { background: #1e3a35; color: #f6f1e9; }
-    iframe { flex: 1; width: 100%; border: none; }
-    .fallback { display: none; flex: 1; align-items: center; justify-content: center; color: #8da39b; flex-direction: column; gap: 12px; font-size: 0.9rem; }
-    .fallback a { color: #f6f1e9; }
+    #viewer { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    canvas { max-width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.4); display: block; }
+    #status { color: #8da39b; font-size: 0.85rem; padding: 32px; text-align: center; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Skye Sauna · Site Shortlist</h1>
+    <h1>Skye Sauna: Site Shortlist</h1>
     <a href="skye-sauna-site-shortlist.pdf" download>Download PDF</a>
   </header>
-  <iframe src="skye-sauna-site-shortlist.pdf" title="Skye Sauna Site Shortlist"></iframe>
-  <div class="fallback">
-    <p>PDF preview not available on this device.</p>
-    <a href="skye-sauna-site-shortlist.pdf">Open PDF directly</a>
-  </div>
+  <div id="viewer"><p id="status">Loading...</p></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    const viewer = document.getElementById('viewer');
+    const status = document.getElementById('status');
+    pdfjsLib.getDocument('skye-sauna-site-shortlist.pdf').promise.then(pdf => {
+      status.remove();
+      const scale = Math.min(window.devicePixelRatio || 1, 2);
+      const renderPage = (num) => pdf.getPage(num).then(page => {
+        const viewport = page.getViewport({ scale: (viewer.clientWidth / page.getViewport({ scale: 1 }).width) * scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        canvas.style.width = (viewport.width / scale) + 'px';
+        canvas.style.height = (viewport.height / scale) + 'px';
+        viewer.appendChild(canvas);
+        return page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      });
+      const pages = [];
+      for (let i = 1; i <= pdf.numPages; i++) pages.push(renderPage(i));
+      return Promise.all(pages);
+    }).catch(() => {
+      status.textContent = 'Could not load PDF.';
+    });
+  </script>
 </body>
 </html>
